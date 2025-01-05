@@ -1864,6 +1864,7 @@ hscrollbar		l_hsb
 picture			l_pic 
 line				l_line
 rectangle		l_rectangle
+ribbonbar  l_ribbon
 roundrectangle l_roundrectangle
 oval				l_oval
 olecontrol		l_oc
@@ -1892,9 +1893,6 @@ else
 End If
 
 Choose Case typeof(ago_item) 
-	Case tabbedbar!
-		// Nothing to process on tabbed control
-		Return 0
 	Case animation!
 		l_an = ago_item
 		li_numset = of_SetState(as_window, ls_itemname, l_an.enabled, l_an.visible)
@@ -2012,6 +2010,10 @@ Choose Case typeof(ago_item)
 		l_rectangle = ago_item
 		setnull(lb_null)
 		li_numset = of_SetState(as_window, ls_itemname, lb_null, l_rectangle.visible)
+	Case ribbonbar!
+		l_ribbon = ago_item
+		// TODO: See if we need to update this independant of the menu item security
+		Return 0
 	Case richtextedit!
 		l_rte = ago_item
 		li_numset = of_SetState(as_window, ls_itemname, l_rte.enabled, l_rte.visible)
@@ -2031,8 +2033,10 @@ Choose Case typeof(ago_item)
 	Case tab!
 		l_tab = ago_item
 		li_numset = of_SetState(as_window, ls_itemname, l_tab.enabled, l_tab.visible)
-//	Case tabbedbar!
-//		Return 0
+	Case tabbedbar!
+		l_tb = ago_item
+		// Nothing to process on tabbed control
+		Return 0
 	Case treeview!
 		l_tv = ago_item
 		li_numset = of_SetState(as_window, ls_itemname, l_tv.enabled, l_tv.visible)
