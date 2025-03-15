@@ -74,6 +74,10 @@ event pfc_positionchanged(integer ai_type, integer ai_scrollpos);///////////////
 // 12.5		Initial version
 //////////////////////////////////////////////////////////////////////////////
 
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = ai_type
+la_temp = ai_scrollpos
 end event
 
 protected function integer of_MessageBox (string as_id, string as_title, string as_text, icon ae_icon, button ae_button, integer ai_default);//////////////////////////////////////////////////////////////////////////////
@@ -381,6 +385,8 @@ if message.number = WM_mousewheel then
 			this.position ++
 	elseif wparam = wp_mw_up and lparam = lp_mw_up then
 			this.position --
+	else
+		//No Action
 	end if
 	this.post event pfc_positionchanged( cst_moved , this.position)
 end if

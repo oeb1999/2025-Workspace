@@ -271,7 +271,7 @@ Return iw_statusbar.of_RefreshPosition()
 
 end event
 
-event pfc_statusbarrbuttonup;call super::pfc_statusbarrbuttonup;//////////////////////////////////////////////////////////////////////////////
+event pfc_statusbarrbuttonup(integer ai_xpos, integer ai_ypos, string as_name);//////////////////////////////////////////////////////////////////////////////
 //
 //	Event:  pfc_StatusBarRButtonUp
 //
@@ -315,10 +315,14 @@ event pfc_statusbarrbuttonup;call super::pfc_statusbarrbuttonup;////////////////
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = ai_xpos
+la_temp = ai_ypos
+la_temp = as_name
 end event
 
-event pfc_statusbardoubleclick;call super::pfc_statusbardoubleclick;//////////////////////////////////////////////////////////////////////////////
+event pfc_statusbardoubleclick(integer ai_xpos, integer ai_ypos, string as_name);//////////////////////////////////////////////////////////////////////////////
 //
 //	Event:  pfc_StatusBarDoubleClick
 //
@@ -362,10 +366,14 @@ event pfc_statusbardoubleclick;call super::pfc_statusbardoubleclick;////////////
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = ai_xpos
+la_temp = ai_ypos
+la_temp = as_name
 end event
 
-event pfc_statusbarclicked;call super::pfc_statusbarclicked;//////////////////////////////////////////////////////////////////////////////
+event pfc_statusbarclicked(integer ai_xpos, integer ai_ypos, string as_name);//////////////////////////////////////////////////////////////////////////////
 //
 //	Event:  pfc_StatusBarClick
 //
@@ -409,6 +417,11 @@ event pfc_statusbarclicked;call super::pfc_statusbarclicked;////////////////////
 //
 //////////////////////////////////////////////////////////////////////////////
 
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = ai_xpos
+la_temp = ai_ypos
+la_temp = as_name
 
 end event
 
@@ -2662,6 +2675,9 @@ ElseIf ienv_object.ostype = WindowsNT! Then
 	Else
 		ls_os = 'windowsnt4x'
 	End If
+Else
+	//Default
+	ls_os = 'windowsnt4x'	
 End If
 
 // Default Micro Help Start Value Height.
@@ -2680,6 +2696,9 @@ li_microhelpheight = li_microhelpheight - ii_microhelpsubtractvalue
 If ls_os = 'windows3x' Then
 	li_microhelpheight = li_microhelpheight - ii_microhelpwin3xsubtractvalue
 ElseIf ls_os = 'windowsnt3x' Then
+	li_microhelpheight = li_microhelpheight - ii_microhelpwinnt3xsubtractvalue
+Else
+	//Default
 	li_microhelpheight = li_microhelpheight - ii_microhelpwinnt3xsubtractvalue
 End If
 
@@ -4511,6 +4530,8 @@ CHOOSE Case ii_barfillstyle
 		ls_fillstyle = 'pfc_progress.width="' + string(ii_barwidth) + '" '
 		ls_fillstyle = ls_fillstyle + 'pfc_progress.height="' + string(li_newheight) + '" '
 		ls_fillstyle = ls_fillstyle + 'pfc_progress.y="' + string(li_newy) + '" '
+	Case Else
+		Return "Unknown barfillstyle"
 END CHOOSE
 
 // Set percentages on screen
@@ -4521,6 +4542,8 @@ CHOOSE CASE ii_bardisplaystyle
 		ls_barstyle = "pfc_progress_border.expression=~"'" + string(adc_completion, "#%") + "'~" "
 	CASE POSITION
 		ls_barstyle = "pfc_progress_border.expression=~"'" + string(ii_barposition, "#") + "'~" "
+	CASE ELSE
+		Return "Unknown bardisplaystyle"
 END CHOOSE
 
 return (ls_fillstyle + ls_barstyle)
@@ -4734,6 +4757,8 @@ For li_cnt = 1 to li_upper
 						'font.family="2" font.pitch="2" font.charset="0" background.mode="2" ' +&
 					') '							
 			End IF
+		CASE ELSE	
+			Return -1
 	END CHOOSE
 
 	ls_dwdefinition = ls_dwdefinition + ls_newobject

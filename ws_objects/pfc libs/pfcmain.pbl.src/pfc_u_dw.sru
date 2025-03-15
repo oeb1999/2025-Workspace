@@ -370,6 +370,8 @@ if ls_type = "column" and not lb_readonly then
 						lb_desired = not lb_editstyleattrib
 					case "ddlb", "dddw"
 						lb_desired = lb_editstyleattrib
+					case else
+						//No Action
 				end choose
 				lm_dw.m_table.m_cut.Enabled = lb_desired
 			end if
@@ -384,6 +386,8 @@ if ls_type = "column" and not lb_readonly then
 						lb_desired = not lb_editstyleattrib
 					case "ddlb", "dddw"
 						lb_desired = lb_editstyleattrib
+					case else
+						//No Action
 				end choose
 				lm_dw.m_table.m_paste.Enabled = lb_desired
 			end if
@@ -450,6 +454,8 @@ if IsValid (inv_QueryMode) then
 							lb_desired = not lb_editstyleattrib
 						case "ddlb", "dddw"
 							lb_desired = lb_editstyleattrib
+						case else
+							//No Action
 					end choose
 					// Enablement based on column				
 					lm_dw.m_table.m_values.Enabled = lb_desired
@@ -981,6 +987,11 @@ event type long pfc_retrievedddw(string as_column);// ##Obsolete##
  * Libraries see https://github.com/OpenSourcePFCLibraries
 */
 //////////////////////////////////////////////////////////////////////////////
+
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = as_column
+
 return 0
 end event
 
@@ -1437,7 +1448,7 @@ s_pagesetupattrib	lstr_pagesetup
 return this.event pfc_pagesetupdlg (lstr_pagesetup)
 end event
 
-event pfc_pagesetupdlg;//////////////////////////////////////////////////////////////////////////////
+event type integer pfc_pagesetupdlg(ref s_pagesetupattrib astr_pagesetup);//////////////////////////////////////////////////////////////////////////////
 //	Event:			pfc_pagesetupdlg
 //	Arguments:		astr_pagesetup:  page setup structure by ref
 //	Returns:			Integer - 1 if successful, 0 if user cancelled from page setup, -1 if error occured
@@ -1531,6 +1542,8 @@ if ls_portraitorientation = "0" then
 	SetNull (astr_pagesetup.b_portraitorientation)
 elseif ls_portraitorientation = "2" then
 	astr_pagesetup.b_portraitorientation = true
+else
+	//No Action
 end if
 
 // Allow pagesetup structure to have additional values
@@ -1563,10 +1576,17 @@ if ll_rc > 0 then
 		this.Object.DataWindow.Print.Orientation = 1
 	elseif astr_pagesetup.b_portraitorientation then
 		this.Object.DataWindow.Print.Orientation = 2
+	else
+		//No Action
 	end if
 end if
 
 return ll_rc
+end event
+
+event pfc_prepagesetupdlg(ref s_pagesetupattrib astr_pagesetup);//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = astr_pagesetup
 end event
 
 event pfc_rowchanged;//////////////////////////////////////////////////////////////////////////////
@@ -2283,7 +2303,7 @@ event pfc_postupdate;///////////////////////////////////////////////////////////
 return this.Event pfc_resetupdate()
 end event
 
-event pfc_rowvalidation;//////////////////////////////////////////////////////////////////////////////
+event type integer pfc_rowvalidation(long al_row);//////////////////////////////////////////////////////////////////////////////
 //	Event:			pfc_rowvalidation
 //	Arguments:		al_row	The row to validate.
 //	Returns:			Integer
@@ -2314,10 +2334,22 @@ event pfc_rowvalidation;////////////////////////////////////////////////////////
  * Libraries see https://github.com/OpenSourcePFCLibraries
 */
 //////////////////////////////////////////////////////////////////////////////
+
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = al_row
+
 return SUCCESS
 end event
 
-event pfc_populatedddw;//////////////////////////////////////////////////////////////////////////////
+event type integer pfc_preproperties(ref n_cst_dwpropertyattrib anv_dwpropertyattrib);//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = anv_dwpropertyattrib
+
+Return 1
+end event
+
+event type long pfc_populatedddw(string as_colname, ref datawindowchild adwc_obj);//////////////////////////////////////////////////////////////////////////////
 //	Event:			pfc_populatedddw
 //	Arguments:		as_colname		column name of the DDDW to populate
 //						adwc_obj			DataWindowChild reference of the DDDW column
@@ -2350,6 +2382,12 @@ event pfc_populatedddw;/////////////////////////////////////////////////////////
  * Libraries see https://github.com/OpenSourcePFCLibraries
 */
 //////////////////////////////////////////////////////////////////////////////
+
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = as_colname
+la_temp = adwc_obj
+
 return NO_ACTION
 end event
 
@@ -2462,6 +2500,16 @@ if IsValid ( inv_Linkage ) then
 end if
 
 return CONTINUE_ACTION
+end event
+
+event pfc_prefinddlg(ref n_cst_findattrib anv_findattrib);//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = anv_findattrib
+end event
+
+event pfc_prereplacedlg(ref n_cst_findattrib anv_findattrib);//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = anv_findattrib
 end event
 
 event pfc_preinsertrow;//////////////////////////////////////////////////////////////////////////////
@@ -2618,6 +2666,8 @@ if IsValid(inv_Property) then
 	if inv_Property.of_IsPropertyOpen() = false then lb_desired = true
 elseif IsValid(snv_property) then
 	if snv_property.of_IsPropertyOpen() = false then lb_desired = true		
+else
+	//No Action
 end if	
 if lb_desired then
 	am_dw.m_table.m_debug.Visible = true
@@ -2633,7 +2683,7 @@ if integer(this.object.datawindow.processing) = 1 then
 end if
 end event
 
-event pfc_checkrequirederror;//////////////////////////////////////////////////////////////////////////////
+event type integer pfc_checkrequirederror(long al_row, ref string as_columnname);//////////////////////////////////////////////////////////////////////////////
 //	Event:			pfc_checkrequirederror
 // Arguments:		al_row - The row number
 //						as_columnname - The column name by reference.
@@ -2669,10 +2719,17 @@ event pfc_checkrequirederror;///////////////////////////////////////////////////
  * Libraries see https://github.com/OpenSourcePFCLibraries
 */
 //////////////////////////////////////////////////////////////////////////////
+
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = al_row
+la_temp = as_columnname
+
+
 return 1
 end event
 
-event pfc_postinsertrow;//////////////////////////////////////////////////////////////////////////////
+event pfc_postinsertrow(long al_row);//////////////////////////////////////////////////////////////////////////////
 //	Event:			pfc_postinsertrow
 //	Arguments:		al_row
 //	Returns:			None
@@ -2702,6 +2759,9 @@ event pfc_postinsertrow;////////////////////////////////////////////////////////
 */
 //////////////////////////////////////////////////////////////////////////////
 
+//Virtual event - the following is to prevent Visual Expert from flagging unused arguments
+any	la_temp
+la_temp = al_row
 end event
 
 event pfc_postlbuttonup(unsignedlong flags, integer xpos, integer ypos);/////////////////////////////////////////////////////////////////////////
