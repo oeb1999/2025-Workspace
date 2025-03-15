@@ -346,6 +346,8 @@ Choose Case as_val
 		Return True
 	Case 'FALSE', 'F', 'NO', 'N', '0','OFF'
 		Return False
+	Case Else
+		Return lb_null
 End Choose
 
 //Invalid input parameter
@@ -482,6 +484,9 @@ Choose Case ae_alignment
 	Case floating!
 		Return "Floating"
 	
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -704,6 +709,8 @@ Choose Case a_sqlpreviewtype
 		Return 'Update'
 	Case PreviewSelect!
 		Return 'Retrieve'
+	Case Else
+		Return "!"
 End Choose
 
 //Invalid parameter
@@ -780,6 +787,8 @@ Choose Case ae_ostype
 		Return 'windows'
 	Case windowsnt!
 		Return 'windowsnt'
+	Case Else
+		Return '!'
 End Choose
 
 //Invalid parameter
@@ -860,6 +869,8 @@ ElseIf Pos (as_source, "retrieve") > 0 or &
 		Pos (as_source, "select") > 0 Then
 	a_sqlpreviewtype = PreviewSelect!
 	Return 1
+Else
+	Return -1
 End If
 
 //Invalid parameter.
@@ -938,6 +949,9 @@ ElseIf Pos (as_windowstate, "normal") > 0 Then
 	aws_windowstate = Normal!
 	Return 1
 	
+Else
+	Return -1
+	
 End If
 
 //Invalid parameter.
@@ -1010,6 +1024,9 @@ Choose Case aws_windowstate
 	Case Minimized!
 		Return "minimized"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -1088,6 +1105,9 @@ Choose Case ae_icon
 	Case exclamation!
 		Return "Exclamation"
 	
+	Case else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -1169,6 +1189,9 @@ Choose Case ae_button
 	Case AbortRetryIgnore!
 		Return "AbortRetryIgnore"
 	
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -1251,6 +1274,7 @@ Choose Case as_source
 		
 	Case Else
 		Return -1
+		
 End Choose
 
 Return 1
@@ -1336,6 +1360,7 @@ Choose Case as_source
 		
 	Case Else
 		Return -1
+
 End Choose
 
 Return 1
@@ -1425,6 +1450,7 @@ Choose Case as_source
 		
 	Case Else
 		Return -1
+
 End Choose
 
 Return 1
@@ -1570,6 +1596,8 @@ Choose Case ae_dwitemstatus
 		Return 'New'
 	Case NewModified!
 		Return 'NewModified'
+	Case Else
+		Return '!'
 End Choose
 
 //Invalid parameter
@@ -1654,6 +1682,9 @@ ElseIf Pos (as_align, "right") > 0 Then
 ElseIf Pos (as_align, "floating") > 0 Then
 	ae_toolbaralign = floating!
 	Return 1
+
+Else
+	Return -1
 	
 End If
 
@@ -1730,6 +1761,8 @@ CHOOSE CASE as_status
 	CASE "newmodified", "newmodified!"
 		ae_dwItemStatus = NewModified!
 		Return 1		
+	CASE ELSE
+		Return -1
 END CHOOSE
 
 //Invalid parameter.
@@ -2288,7 +2321,7 @@ Choose Case ae_accessiblerole
 		Return "linkrole"
 		
 	Case listrole!
-		Return "listrole	"
+		Return "listrole"
 	
 	Case menubarrole!
 		Return "menubarrole"
@@ -2380,6 +2413,8 @@ Choose Case ae_accessiblerole
 	Case windowrole!
 		Return "windowrole"
 		
+	Case Else
+		Return "!"
 End Choose
 
 //Invalid parameter value
@@ -2539,6 +2574,9 @@ Choose Case ae_argcallingconvention
 	Case varlistargument!
 		Return "varlistargument"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -2775,6 +2813,9 @@ Choose Case ae_arrangeopen
 
 	Case original!
 		Return "original"
+	
+	Case Else
+		Return "!"
 
 End Choose
 
@@ -3013,6 +3054,9 @@ Choose Case ae_Band
 	Case header!
 		Return "header"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3096,6 +3140,10 @@ Choose Case ae_border
 
 	Case underline!
 		Return "underline"
+		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3344,6 +3392,9 @@ Choose Case ae_Borderstyle
 	Case styleshadowbox!
 		Return "styleshadowbox"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3425,6 +3476,9 @@ Choose Case ae_Charset
 	Case charsetunicode!
 		Return "charsetunicode"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3502,6 +3556,9 @@ Choose Case ae_arrangetypes
 
 	Case tilehorizontal!
 		Return "tilehorizontal"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -3614,6 +3671,9 @@ Choose Case ae_clipboardformat
 	Case clipformatwave!
 		Return "clipformatwave"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3806,6 +3866,9 @@ Choose Case ae_connectprivilege
 	Case noconnectprivilege!
 		Return "noconnectprivilege"
 
+	Case else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -3962,6 +4025,9 @@ Choose Case ae_converttype
 	Case yunitstopixels!
 		Return "yunitstopixels"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -4169,6 +4235,9 @@ Choose Case ae_cputypes
 	Case ultrasparc!
 		Return "ultrasparc"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -4374,6 +4443,9 @@ Choose Case ae_datetimeformat
 	Case dtftime!
 		Return "dtftime"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -4617,6 +4689,9 @@ Choose Case ae_dbnotification
 	Case dbserverdown!
 		Return "dbserverdown"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -4695,7 +4770,9 @@ Choose Case ae_direction
 	Case directionup!
 		Return "directionup"
 
-
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -4942,6 +5019,9 @@ Choose Case ae_displaysizemode
 	Case inkpicstretched!
 		Return "inkpicstretched"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -5098,6 +5178,9 @@ Choose Case ae_alignment
 	Case right!
 		Return "right"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -5251,6 +5334,9 @@ Choose Case ae_dwbuffer
 	Case primary!
 		Return "primary"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -5325,6 +5411,9 @@ Choose Case ae_encoding
 	
 	Case encodingutf8!
 		Return "encodingutf8"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -5544,10 +5633,7 @@ Choose Case ae_errorreturn
 		Return "eventwrongprototypeerror"
 
 	Case featurenotsupportederror!
-		Return "borderrole"
-
-	Case featurenotsupportederror!
-		Return "buttondropdowngridrole"
+		Return "featurenotsupportederror"
 
 	Case filealreadyopenerror!
 		Return "filealreadyopenerror"
@@ -5609,6 +5695,9 @@ Choose Case ae_errorreturn
 	Case tracestartederror!
 		Return "tracestartederror"
 
+	Case Else
+		Return "!"
+	
 End Choose
 
 //Invalid parameter value
@@ -5756,6 +5845,9 @@ Choose Case ae_dwconflictresolution
 	Case failonanyconflict!
 		Return "failonanyconflict"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -5987,6 +6079,9 @@ Choose Case ae_fileaccess
 	Case write!
 		Return "write!"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -6139,6 +6234,9 @@ Choose Case ae_filemode
 
 	Case textmode!
 		Return "textmode"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -6305,6 +6403,9 @@ Choose Case ae_filetype
 	Case filetypetext!
 		Return "filetypetext"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -6464,6 +6565,9 @@ Choose Case ae_filelock
 	Case shared!
 		Return "shared"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -6622,6 +6726,9 @@ Choose Case ae_exceptionaction
 	
 	Case exceptionsubstitutereturnvalue!
 		Return "exceptionsubstitutereturnvalue"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -6799,6 +6906,10 @@ Choose Case ae_fillpattern
 	
 	Case vertical!
 		Return "vertical"		
+		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -6945,6 +7056,9 @@ Choose Case ae_flowdirection
 
 	Case righttoleft!
 		Return "righttoleft"
+
+	Case Else
+		Return "!"
 
 End Choose
 
@@ -7193,6 +7307,9 @@ Choose Case ae_fontcharset
 	Case vietnamesecharset!
 		Return "vietnamesecharset"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -7364,6 +7481,9 @@ Choose Case ae_fontfamily
 	Case swiss!
 		Return "swiss"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -7516,6 +7636,9 @@ Choose Case ae_fontpitch
 
 	Case variable!
 		Return "variable"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -7688,6 +7811,9 @@ Choose Case ae_graxisdatatype
 	Case adttime!
 		Return "adttime"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -7762,6 +7888,9 @@ Choose Case ae_grcolortype
 	
 	Case shade!
 		Return "shade"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -7910,6 +8039,9 @@ Choose Case ae_grdatatype
 	Case yvalue!
 		Return "yvalue"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -8229,6 +8361,9 @@ Choose Case ae_grgraphtype
 	Case scattergraph!
 		Return "scattergraph" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -8393,6 +8528,9 @@ Choose Case ae_grlegendtype
 	
 	Case nolegend!
 		Return "nolegend" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -8598,6 +8736,9 @@ Choose Case ae_grobjecttype
 		
 	Case typevaluelabel!
 		Return "typevaluelabel" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -8857,6 +8998,9 @@ Choose Case ae_grresettype
 	Case series!
 		Return "series" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -8946,6 +9090,9 @@ Choose Case ae_grroundtotype
 
 	Case rndyears!
 		Return "rndyears" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -9187,6 +9334,9 @@ Choose Case ae_grscalevalue
 	Case percentage!
 		Return "percentage" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -9258,6 +9408,9 @@ Choose Case ae_grscaletype
 
 	Case loge!
 		Return "loge" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -9417,6 +9570,9 @@ Choose Case ae_grsorttype
 
 	Case userdefinedsort!
 		Return "userdefinedsort" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -9637,6 +9793,9 @@ Choose Case ae_grsymboltype
 	Case symbolx!
 		Return "symbolx" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -9795,6 +9954,9 @@ Choose Case ae_grtictype
 
 	Case straddle!
 		Return "straddle" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -9955,6 +10117,9 @@ Choose Case ae_helpcommand
 	Case topic!
 		Return "topic" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -10114,6 +10279,9 @@ Choose Case ae_htickmarks
 	Case hticksontop!
 		Return "hticksontop" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -10266,6 +10434,9 @@ Choose Case ae_inkcollectionmode
 
 	Case inkonly!
 		Return "inkonly" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -10420,6 +10591,9 @@ Choose Case ae_inkcompressionmode
 	Case nocompression!
 		Return "nocompression" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -10572,6 +10746,9 @@ Choose Case ae_inkeditstatus
 
 	Case inkeditrecognizingink!
 		Return "inkeditrecognizingink" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -10726,6 +10903,9 @@ Choose Case ae_inkmode
 	Case inkdisabled!
 		Return "inkdisabled" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -10872,6 +11052,9 @@ Choose Case ae_inkpentip
 
 	Case pentiprectangle!
 		Return "pentiprectangle" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -11032,6 +11215,9 @@ Choose Case ae_inkpersistenceformat
 	Case inkserializedformat!
 		Return "inkserializedformat" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -11185,6 +11371,9 @@ Choose Case ae_inkpiceditmode
 	Case inkpicselectmode!
 		Return "inkpicselectmode" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -11331,6 +11520,9 @@ Choose Case ae_inkpicstatus
 
 	Case inkpicidle!
 		Return "inkpicidle" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -12115,7 +12307,9 @@ Choose Case ae_languageid
 		Case languagezulu!
 			Return "languagezulu" 
 	
-		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -12876,7 +13070,9 @@ Choose Case ae_keycode
 		Case keyz!
 			Return "keyz"  
 
-		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -13023,6 +13219,9 @@ Choose Case ae_languagesortid
 
 	Case languagesortunicode!
 		Return "languagesortunicode" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -13224,6 +13423,9 @@ Choose Case ae_libdirtype
 		Case dirwindow!
 			Return "dirwindow"  
 		
+		Case Else
+			Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -13419,6 +13621,9 @@ Choose Case ae_libexporttype
 		Case exportwindow!
 			Return "exportwindow"  
 		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -13559,6 +13764,9 @@ Choose Case ae_libimporttype
 
 	Case importdatawindow!
 		Return "importdatawindow" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -13730,6 +13938,9 @@ Choose Case ae_linestyle
 		
 		Case transparent!
 			Return "transparent"  
+			
+		Case Else
+			Return "!"
 		
 End Choose
 
@@ -13890,6 +14101,9 @@ Choose Case ae_listviewview
 		Case listviewsmallicon!
 			Return "listviewsmallicon" 
 		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -14049,6 +14263,9 @@ Choose Case ae_location
 		Case prior!
 			Return "prior"  
 		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -14202,6 +14419,9 @@ Choose Case ae_mailfiletype
 		Case mailolestatic!
 			Return "mailolestatic"  
 		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -14355,6 +14575,9 @@ Choose Case ae_maillogonoption
 	
 	Case mailnewsessionwithdownload!
 		Return "mailnewsessionwithdownload"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -14515,6 +14738,9 @@ Choose Case ae_mailreadoption
 	Case mailsuppressattachments!
 		Return "mailsuppressattachments"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -14674,6 +14900,9 @@ Choose Case ae_mailrecipienttype
 		Case mailto!
 			Return "mailto"  
 		
+		Case Else
+			Return "!"
+			
 End Choose
 
 //Invalid parameter value
@@ -14918,6 +15147,9 @@ Choose Case ae_mailreturncode
 		Case mailreturnuserabort!
 			Return "mailreturnuserabort"  
 				
+		Case Else
+			Return "!"
+				
 End Choose
 
 //Invalid parameter value
@@ -15090,6 +15322,9 @@ Choose Case ae_maskdatatype
 	Case timemask!
 		Return "timemask" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -15248,6 +15483,9 @@ Choose Case ae_menuitemtype
 	
 	Case menuitemtypenormal!
 		Return "menuitemtypenormal"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -15420,6 +15658,9 @@ Choose Case ae_menumergeoption
 	Case windowmenu!
 		Return "windowmenu"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -15567,6 +15808,9 @@ Choose Case ae_menustyle
 	Case traditionalmenu!
 		Return "traditionalmenu"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -15720,6 +15964,9 @@ Choose Case ae_metadatatype
 	Case xmlschema!
 		Return "xmlschema"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -15867,6 +16114,9 @@ Choose Case ae_moncaldisplaystate
 	Case partlydisplayed!
 		Return "partlydisplayed"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -16019,6 +16269,9 @@ Choose Case ae_moncalrepeattype
 	
 	Case yearly!
 		Return "yearly"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -17223,6 +17476,9 @@ Choose Case ae_object
 	Case wsconnection!
 		Return "wsconnection"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -17363,6 +17619,9 @@ Choose Case ae_olefunctioncalltype
 
 	Case asstatement!
 		Return "asstatement"
+
+	Case Else
+		Return "!"
 
 End Choose
 
@@ -17510,6 +17769,9 @@ Choose Case ae_omactivatetype
 
 	Case offsite!
 		Return "offsite"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -17664,6 +17926,9 @@ Choose Case ae_omactivation
 	Case activateongetfocus!
 		Return "activateongetfocus"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -17816,6 +18081,9 @@ Choose Case ae_omcontentsallowed
 
 	Case containslinkedonly!
 		Return "containslinkedonly"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -17970,6 +18238,9 @@ Choose Case ae_omdisplaytype
 	Case displayasicon!
 		Return "displayasicon"
 	
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -18117,6 +18388,9 @@ Choose Case ae_omlinkupdateoptions
 	Case linkupdatemanual!
 		Return "linkupdatemanual"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -18264,6 +18538,9 @@ Choose Case ae_orientationtype
 	Case paperportrait!
 		Return "paperportrait"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -18416,6 +18693,9 @@ Choose Case ae_paragraphsetting
 	
 	Case rightmargin!
 		Return "rightmargin"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -18644,6 +18924,9 @@ Choose Case ae_parmtype
 	Case typeunknown!
 		Return "typeunknown"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -18791,6 +19074,9 @@ Choose Case ae_pbtypes
 	Case enterprise!
 		Return "enterprise"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -18864,7 +19150,11 @@ Choose Case as_source
 		ae_pdfmethod = distill!
 
 	Case "xslfop"
-		ae_pdfmethod = xslfop!
+		// This method is deprecated
+		return -1
+		
+	Case "nativepdf"
+		ae_pdfmethod = nativepdf!
 
 	Case Else
 		// Wrong Parameter Value
@@ -18935,8 +19225,11 @@ Choose Case ae_pdfmethod
 	Case distill!
 		Return "distill"
 
-	Case xslfop!
-		Return "xslfop"
+	Case nativepdf!
+		Return "nativepdf"
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -19164,6 +19457,9 @@ Choose Case ae_pointer
 	Case uparrow!
 		Return "uparrow"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -19343,6 +19639,9 @@ Choose Case ae_profileroutinekind
 	Case routineroot!
 		Return "routineroot"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -19520,6 +19819,9 @@ Choose Case ae_registryvaluetype
 	Case regulongbigendian!
 		Return "regulongbigendian" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -19673,6 +19975,9 @@ Choose Case ae_richtexttoolbaractivation
 	Case richtexttoolbaractivationonedit!
 		Return "richtexttoolbaractivationonedit" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -19825,6 +20130,9 @@ Choose Case ae_rowfocusind
 	
 	Case off!
 		Return "off"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -20117,6 +20425,9 @@ Choose Case ae_saveastype
 	Case xslfo!
 		Return "xslfo"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -20263,7 +20574,10 @@ Choose Case ae_savemetadata
 
 	Case metadatainternal!
 		Return "metadatainternal"
-
+	
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -20411,6 +20725,9 @@ Choose Case ae_scriptkind
 	Case scriptfunction!
 		Return "scriptfunction"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -20482,6 +20799,9 @@ Choose Case ae_seektype
 	
 	Case fromend!
 		Return "fromend"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -20648,6 +20968,9 @@ Choose Case ae_setpostype
 	Case totop!
 		Return "totop"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -20807,6 +21130,9 @@ Choose Case ae_sizemode
 	Case zoom!
 		Return "zoom" 
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -20959,6 +21285,9 @@ Choose Case ae_spacing
 	
 	Case spacing2!
 		Return "spacing2" 
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -21138,6 +21467,9 @@ Choose Case ae_sqlfunction
 	Case sqldbupdate!
 		Return "sqldbupdate"
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -21291,6 +21623,9 @@ Choose Case ae_sqlpreviewfunction
 	Case previewfunctionupdate!
 		Return "previewfunctionupdate"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -21443,6 +21778,9 @@ Choose Case ae_stgreadmode
 	
 	Case stgwrite!
 		Return "stgwrite"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -21603,6 +21941,9 @@ Choose Case ae_stgsharemode
 	Case stgexclusive!
 		Return "stgexclusive"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -21756,6 +22097,9 @@ Choose Case ae_syncprocesstype
 	Case uploadonly!
 		Return "uploadonly"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -21842,6 +22186,9 @@ Choose Case ae_tabposition
 	
 	Case tabsontopandbottom!
 		Return "tabsontopandbottom"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -21995,6 +22342,9 @@ Choose Case ae_textcase
 	
 	Case upper!
 		Return "upper"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -22167,6 +22517,9 @@ Choose Case ae_textstyle
 	Case underlined!
 		Return "underlined"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -22326,6 +22679,9 @@ Choose Case ae_timerkind
 	Case timernone!
 		Return "timernone"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -22473,6 +22829,9 @@ Choose Case ae_toolbarstyle
 	Case traditionaltoolbar!
 		Return "traditionaltoolbar"
 
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -22674,6 +23033,9 @@ Choose Case ae_traceactivity
 	Case actuser!
 		Return "actuser"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -22826,6 +23188,9 @@ Choose Case ae_tracecategory
 	
 	Case traceout!
 		Return "traceout"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -23021,6 +23386,9 @@ Choose Case ae_treenavigation
 	
 	Case roottreeitem!
 		Return "roottreeitem"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -23800,6 +24168,9 @@ Choose Case ae_trigevent
 	Case wserror!
 		Return "wserror"  
 			
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -23952,6 +24323,9 @@ Choose Case ae_typecategory
 	
 	Case simpletype!
 		Return "simpletype"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -24106,6 +24480,9 @@ Choose Case ae_userobjects
 	Case vbxvisual!
 		Return "vbxvisual"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -24258,6 +24635,9 @@ Choose Case ae_valschemetype
 	
 	Case valnever!
 		Return "valnever"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -24417,6 +24797,9 @@ Choose Case ae_varaccess
 	Case system!
 		Return "system"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -24569,6 +24952,9 @@ Choose Case ae_variablecardinalitytype
 	
 	Case unboundedarray!
 		Return "unboundedarray"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -24735,6 +25121,9 @@ Choose Case ae_variablekind
 	Case variableshared!
 		Return "variableshared"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -24893,6 +25282,9 @@ Choose Case ae_vtextalign
 	
 	Case vcenter!
 		Return "vcenter"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -25053,6 +25445,9 @@ Choose Case ae_vtickmarks
 	Case vticksonright!
 		Return "vticksonright"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -25205,6 +25600,9 @@ Choose Case ae_webpagingmethod
 	
 	Case xmlclientside!
 		Return "xmlclientside"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -25382,6 +25780,9 @@ Choose Case ae_weekday
 	
 	Case wednesday!
 		Return "wednesday"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 
@@ -25584,6 +25985,9 @@ Choose Case ae_windowanimationstyle
 	Case topslide!
 		Return "topslide"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -25755,6 +26159,9 @@ Choose Case ae_windowtype
 	Case response!
 		Return "response"  
 		
+	Case Else
+		Return "!"
+		
 End Choose
 
 //Invalid parameter value
@@ -25901,6 +26308,9 @@ Choose Case ae_writemode
 	
 	Case replace!
 		Return "replace"  
+		
+	Case Else
+		Return "!"
 		
 End Choose
 

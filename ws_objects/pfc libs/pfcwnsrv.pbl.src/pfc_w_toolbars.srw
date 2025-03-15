@@ -533,7 +533,8 @@ string text = "OK"
 boolean default = true
 end type
 
-event clicked;call u_cb::clicked;parent.Event pfc_default ()
+event clicked;call u_cb::clicked;
+parent.Event pfc_default ()
 end event
 
 type cb_cancel from u_cb within pfc_w_toolbars
@@ -545,7 +546,8 @@ string text = "Cancel"
 boolean cancel = true
 end type
 
-event clicked;call u_cb::clicked;parent.Event pfc_cancel ()
+event clicked;call u_cb::clicked;
+parent.Event pfc_cancel ()
 end event
 
 type cbx_text from u_cbx within pfc_w_toolbars
@@ -558,7 +560,8 @@ long backcolor = 79741120
 string text = "&Large Buttons"
 end type
 
-event clicked;call u_cbx::clicked;cb_apply.Enabled = True
+event clicked;call u_cbx::clicked;
+cb_apply.Enabled = True
 
 end event
 
@@ -572,7 +575,8 @@ long backcolor = 79741120
 string text = "&Show Tooltips"
 end type
 
-event clicked;call u_cbx::clicked;cb_apply.Enabled = True
+event clicked;call u_cbx::clicked;
+cb_apply.Enabled = True
 
 end event
 
@@ -585,7 +589,8 @@ boolean enabled = false
 string text = "&Apply"
 end type
 
-event clicked;call u_cb::clicked;parent.Event pfc_apply ()
+event clicked;call u_cb::clicked;
+parent.Event pfc_apply ()
 end event
 
 type gb_app from groupbox within pfc_w_toolbars
@@ -607,7 +612,6 @@ type rb_top from u_rb within pfc_w_toolbars
 integer x = 91
 integer y = 472
 integer width = 1358
-integer height = 68
 string text = "T&op"
 end type
 
@@ -658,7 +662,6 @@ type rb_bottom from u_rb within pfc_w_toolbars
 integer x = 91
 integer y = 536
 integer width = 1358
-integer height = 68
 string text = "&Bottom"
 end type
 
@@ -708,7 +711,6 @@ type rb_left from u_rb within pfc_w_toolbars
 integer x = 91
 integer y = 600
 integer width = 1358
-integer height = 68
 string text = "L&eft"
 end type
 
@@ -758,7 +760,6 @@ type rb_right from u_rb within pfc_w_toolbars
 integer x = 91
 integer y = 664
 integer width = 1358
-integer height = 68
 string text = "&Right"
 end type
 
@@ -808,7 +809,6 @@ type rb_floating from u_rb within pfc_w_toolbars
 integer x = 91
 integer y = 728
 integer width = 1358
-integer height = 68
 string text = "&Floating"
 end type
 
@@ -937,6 +937,8 @@ if ii_toolbarindex	 > 0 then
 			rb_left.checked = true
 		case floating!
 			rb_floating.checked = true
+		case else
+			// Do nothing
 	end choose
 end if
 end event
@@ -987,18 +989,18 @@ if IsNull (dwo) then
 	return
 end if
 
-if dwo.name = "toolbarvisible" then
-	if ii_toolbarindex > 0 then
-		lb_checked = lnv_conversion.of_Boolean (data)
-		if not IsNull (lb_checked) then
-			inv_toolbar[ii_toolbarindex].b_visible = lb_checked
-			cb_apply.Enabled = True
-		end if
-	end if
+lb_checked = lnv_conversion.of_Boolean (data)
+
+if dwo.name = "toolbarvisible" and &
+	ii_toolbarindex > 0 and &
+	not IsNull (lb_checked) then
+		inv_toolbar[ii_toolbarindex].b_visible = lb_checked
+		cb_apply.Enabled = True
 end if
 end event
 
-event constructor;call super::constructor;of_SetRowSelect (true)
+event constructor;call super::constructor;
+of_SetRowSelect (true)
 ib_rmbmenu = FALSE
 end event
 
@@ -1065,6 +1067,6 @@ event clicked;call super::clicked;//////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////////
 
-showHelp ("pfcdlg.hlp", topic!, 1300)
+showHelp ("pfcdlg.chm", topic!, 1300)
 end event
 

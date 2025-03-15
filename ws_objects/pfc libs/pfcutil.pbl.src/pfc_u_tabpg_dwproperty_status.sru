@@ -921,6 +921,8 @@ If ll_currow > 0 Then
 				li_rc = dw_requestorview.SetItemStatus(ll_currow, 0, Primary!, DataModified!)
 			ElseIf le_currentstatus = DataModified! and le_desiredstatus = New! Then
 				li_rc = dw_requestorview.SetItemStatus(ll_currow, 0, Primary!, NotModified!)
+			Else
+				li_rc = 0
 			End If
 		End If
 		
@@ -1051,7 +1053,8 @@ integer taborder = 10
 string text = "Assist Status change"
 end type
 
-event clicked;call super::clicked;ib_assistrowstatus = this.Checked
+event clicked;call super::clicked;
+ib_assistrowstatus = this.Checked
 end event
 
 type gb_row from u_gb within pfc_u_tabpg_dwproperty_status
