@@ -1970,12 +1970,6 @@ Choose Case typeof(ago_item)
 		l_rectangle = ago_item
 		setnull(lb_null)
 		li_numset = of_SetState(as_window, ls_itemname, lb_null, l_rectangle.visible)
-		l_rb = ago_item
-		li_numset = of_SetState(as_window, ls_itemname, l_rb.enabled, l_rb.visible)
-	Case rectangle!
-		l_rectangle = ago_item
-		setnull(lb_null)
-		li_numset = of_SetState(as_window, ls_itemname, lb_null, l_rectangle.visible)
 	Case ribbonbar!
 		l_ribbon = ago_item
 		// TODO: See if we need to update this independant of the menu item security
