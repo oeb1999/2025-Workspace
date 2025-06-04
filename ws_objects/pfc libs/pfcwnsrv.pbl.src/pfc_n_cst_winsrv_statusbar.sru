@@ -86,12 +86,12 @@ n_cst_winsrv_statusbarattrib	inv_dwobjects[]
 //			DO NOT USE THIS VARIABLE
 n_cst_winsrv_statusbarattrib	istr_dwobjects[]
 
-// MicroHelpHeight adjustable values. (if needed changed in constructor)
+// MicroHelpHeight adjustable values. (if needed change in constructor)
 integer		ii_microhelpstartvalue = 61
 integer		ii_microhelpsubtractvalue = 15
 integer		ii_microhelpwin3xsubtractvalue = 15
 integer		ii_microhelpwinnt3xsubtractvalue = 18
-
+integer		ii_microhelpwin10subtractvalue = 15
 
 end variables
 
@@ -2672,6 +2672,8 @@ If ienv_object.ostype = Windows! Then
 ElseIf ienv_object.ostype = WindowsNT! Then
 	If ienv_object.osMajorRevision <= 3 Then
 		ls_os = 'windowsnt3x'
+	ElseIf ienv_object.osMajorRevision >= 10 Then
+		ls_os = 'windows10'
 	Else
 		ls_os = 'windowsnt4x'
 	End If
@@ -2697,6 +2699,8 @@ If ls_os = 'windows3x' Then
 	li_microhelpheight = li_microhelpheight - ii_microhelpwin3xsubtractvalue
 ElseIf ls_os = 'windowsnt3x' Then
 	li_microhelpheight = li_microhelpheight - ii_microhelpwinnt3xsubtractvalue
+ElseIf ls_os = 'windows10' Then
+	li_microhelpheight = li_microhelpheight - ii_microhelpwin10subtractvalue
 Else
 	//Default
 	li_microhelpheight = li_microhelpheight - ii_microhelpwinnt3xsubtractvalue
