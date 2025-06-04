@@ -12,14 +12,14 @@ boolean visible = false
 integer x = 672
 integer y = 272
 integer width = 1861
-integer height = 60
+integer height = 80
 boolean titlebar = false
 boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 boolean border = false
-long backcolor = 80263328
+long backcolor = 67108864
 event wininichange pbm_wininichange
 dw_statusbar dw_statusbar
 end type
@@ -39,6 +39,7 @@ long		ii_borderheight
 long		ii_borderwidth
 integer 		ii_secondstorefresh = 60   // one minute
 boolean		ib_win95=False
+boolean		ib_win10= False
 w_frame 		iw_parentwindow
 n_cst_platform 	inv_platform
 end variables
@@ -823,6 +824,11 @@ If ib_win95 Then
 	li_xpos_extra = 50
 	li_ypos_extra = 1
 End If
+
+IF ib_win10 THEN
+	li_xpos_extra = 0
+	li_ypos_extra = -10
+END IF
 	
 If Not iw_parentwindow.resizable	Then
 	li_ypos_extra += 3
@@ -1211,6 +1217,10 @@ ib_win95 = (ienv_object.ostype = Windows! and  &
 						ienv_object.osMinorRevision >= 95))) or &
 				(ienv_object.ostype = WindowsNT! and & 
 				 ienv_object.osMajorRevision >= 4)
+				 
+IF ienv_object.osmajorrevision >= 10 THEN
+	ib_win10 = true
+END IF
 
 // Get the Current System settings prior to Creating the visuals.
 li_rc = of_GetSystemSettings() 
@@ -1378,7 +1388,7 @@ end event
 
 type dw_statusbar from u_dw within pfc_w_statusbar
 integer width = 1394
-integer height = 60
+integer height = 80
 boolean vscrollbar = false
 boolean border = false
 boolean livescroll = false
