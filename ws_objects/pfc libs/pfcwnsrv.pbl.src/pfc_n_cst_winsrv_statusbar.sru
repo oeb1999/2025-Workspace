@@ -77,6 +77,9 @@ integer		ii_barstarty
 long		il_barfillcolor = 10789024	// med gray
 long		il_bartextcolor = 0 		//black
 
+long il_backgroundcolor = 12632256 // Gray
+long il_textcolor = 33554432  // Window Text
+
 w_statusbar	iw_statusbar
 //	7.0   Instance variable datatype changed from os_dwobjects to n_cst_winsrv_statusbarattrib type
 //	7.0   Instance variable name changed from istr_dwobjects to inv_dwobjects
@@ -167,6 +170,8 @@ protected function integer of_restorefocuspoint (graphicobject ago_focus)
 public function longlong of_getmemthreshold ()
 public function integer of_setmemthreshold (longlong all_threshold)
 public function integer of_setmemthreshold (long al_threshold)
+public function integer of_settextcolor (long al_textcolor)
+public function integer of_setbackgroundcolor (long al_backgroundcolor)
 end prototypes
 
 event pfc_resize;call super::pfc_resize;//////////////////////////////////////////////////////////////////////////////
@@ -599,6 +604,10 @@ If ab_switch Then
 	
 	// Open the status bar window.
 	li_rc = Open(iw_statusbar, iw_requestor)
+	
+	//Set the background color and refresh the status bar display
+	iw_statusbar.of_setbackgroundcolor( il_backgroundcolor )
+	iw_statusbar.of_refreshcolors()
 	
 	// Restore the focus to the previous object.
 	of_RestoreFocusPoint(lgo_withfocus)
@@ -5095,6 +5104,85 @@ End If
 
 ill_memthreshold = al_threshold
 Return 1
+end function
+
+public function integer of_settextcolor (long al_textcolor);//////////////////////////////////////////////////////////////////////////////
+//
+/*
+ * Open Source PowerBuilder Foundation Class Libraries
+ *
+ * Copyright (c) 2004-2017, All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted in accordance with the MIT License
+
+ *
+ * https://opensource.org/licenses/MIT
+ *
+ * ====================================================================
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals and was originally based on software copyright (c) 
+ * 1996-2004 Sybase, Inc. http://www.sybase.com.  For more
+ * information on the Open Source PowerBuilder Foundation Class
+ * Libraries see https://github.com/OpenSourcePFCLibraries
+*/
+//
+//////////////////////////////////////////////////////////////////////////////
+integer	li_rc
+
+if isnull(al_textcolor) or (al_textcolor < 0) then
+	return -1
+end if
+
+il_textcolor = al_textcolor
+
+// Notify the GUI of the change.
+If IsValid(iw_statusbar) Then
+	li_rc = iw_statusbar.of_CreateVisuals()
+End If
+
+Return li_rc
+end function
+
+public function integer of_setbackgroundcolor (long al_backgroundcolor);//////////////////////////////////////////////////////////////////////////////
+//
+/*
+ * Open Source PowerBuilder Foundation Class Libraries
+ *
+ * Copyright (c) 2004-2017, All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted in accordance with the MIT License
+
+ *
+ * https://opensource.org/licenses/MIT
+ *
+ * ====================================================================
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals and was originally based on software copyright (c) 
+ * 1996-2004 Sybase, Inc. http://www.sybase.com.  For more
+ * information on the Open Source PowerBuilder Foundation Class
+ * Libraries see https://github.com/OpenSourcePFCLibraries
+*/
+//
+//////////////////////////////////////////////////////////////////////////////
+integer	li_rc
+
+if isnull(al_backgroundcolor) or (al_backgroundcolor < 0) then
+	return -1
+end if
+
+il_backgroundcolor = al_backgroundcolor
+
+// Notify the GUI of the change.
+If IsValid(iw_statusbar) Then
+	li_rc = iw_statusbar.of_setbackgroundcolor(il_backgroundcolor)
+	li_rc = iw_statusbar.of_CreateVisuals()
+End If
+
+Return li_rc
 end function
 
 on pfc_n_cst_winsrv_statusbar.create

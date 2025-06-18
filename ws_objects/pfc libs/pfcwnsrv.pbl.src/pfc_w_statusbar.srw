@@ -11,8 +11,8 @@ global type pfc_w_statusbar from w_popup
 boolean visible = false
 integer x = 672
 integer y = 272
-integer width = 1861
-integer height = 80
+integer width = 690
+integer height = 88
 boolean titlebar = false
 boolean controlmenu = false
 boolean minbox = false
@@ -34,7 +34,6 @@ protected:
 Environment	ienv_object
 Integer		ii_winmaxwidth
 long		il_warningcolor=255	        // Red
-long 		il_buttonface
 long		ii_borderheight
 long		ii_borderwidth
 integer 		ii_secondstorefresh = 60   // one minute
@@ -42,6 +41,7 @@ boolean		ib_win95=False
 boolean		ib_win10= False
 w_frame 		iw_parentwindow
 n_cst_platform 	inv_platform
+long	il_backgroundcolor = 78682240  // buttonface
 end variables
 
 forward prototypes
@@ -52,12 +52,13 @@ public function integer of_updatevisuals (string as_id, string as_type, string a
 public function integer of_updatetimerformat (string as_format)
 public function integer of_updatedwtimerinterval (long ai_milliseconds)
 protected function integer of_refreshvisuals ()
-protected function integer of_refreshcolors ()
+public function integer of_refreshcolors ()
 protected function integer of_setposition ()
 public function integer of_modify (string as_modifyexp)
 protected function integer of_getsystemsettings ()
 protected function long of_color (string as_rgb)
 protected function integer of_restorefocuspoint (graphicobject ago_focus)
+public function integer of_setbackgroundcolor (long al_backgroundcolor)
 end prototypes
 
 event wininichange;call super::wininichange;//////////////////////////////////////////////////////////////////////////////
@@ -332,7 +333,7 @@ End If
 
 // Change the Background color of all the objects to be the 
 //	appropriate background color.
-ls_replacestring = 'background.color="'+string(il_buttonface)+'"'
+ls_replacestring = 'background.color="'+string(il_backgroundcolor)+'"'
 ls_dwdefinition = lnv_string.of_GlobalReplace(ls_dwdefinition, &
 			'background.color="12632256"', ls_replacestring, TRUE)
 
@@ -634,12 +635,12 @@ If iw_parentwindow.inv_statusbar.of_GetMem() Then
 								string(il_warningcolor)+"' "
 		Else
 			ls_modifyexp =	ls_modifyexp + "pfc_mem.Background.Color='"+ &
-								string(il_buttonface)+"' "
+								string(il_backgroundcolor)+"' "
 		End if
 	Else
 		// Display NotApplicable/NotAvailable.		
 		ls_modifyexp = "pfc_mem.Expression=~"'"+ "Mem: N/A'~" " + &
-							"pfc_mem.Background.Color='"+ string(il_buttonface)+"' "
+							"pfc_mem.Background.Color='"+ string(il_backgroundcolor)+"' "
 	End If
 	ls_rc = dw_statusbar.Modify (ls_modifyexp)		
 End If
@@ -657,12 +658,12 @@ If iw_parentwindow.inv_statusbar.of_GetUser() Then
 								string(il_warningcolor)+"' "
 		Else
 			ls_modifyexp =	ls_modifyexp + "pfc_user.Background.Color='"+ &
-								string(il_buttonface)+"' "
+								string(il_backgroundcolor)+"' "
 		End if
 	Else
 		// Display NotApplicable/NotAvailable.
 		ls_modifyexp = "pfc_user.Expression=~"'"+ "User: N/A'~" " + &
-							"pfc_user.Background.Color='"+ string(il_buttonface)+"' "	
+							"pfc_user.Background.Color='"+ string(il_backgroundcolor)+"' "	
 	End If
 	ls_rc = dw_statusbar.Modify (ls_modifyexp)		
 End If
@@ -680,12 +681,12 @@ If iw_parentwindow.inv_statusbar.of_GetGDI() Then
 								string(il_warningcolor)+"' "
 		Else
 			ls_modifyexp =	ls_modifyexp + "pfc_gdi.Background.Color='"+ &
-								string(il_buttonface)+"' "
+								string(il_backgroundcolor)+"' "
 		End if
 	Else
 		// Display NotApplicable/NotAvailable.		
 		ls_modifyexp = "pfc_gdi.Expression=~"'"+ "GDI: N/A'~" " + &
-							"pfc_gdi.Background.Color='"+ string(il_buttonface)+"' "				
+							"pfc_gdi.Background.Color='"+ string(il_backgroundcolor)+"' "				
 	End If		
 	ls_rc = dw_statusbar.Modify (ls_modifyexp)		
 End If
@@ -693,7 +694,7 @@ End If
 Return 1
 end function
 
-protected function integer of_refreshcolors ();//////////////////////////////////////////////////////////////////////////////
+public function integer of_refreshcolors ();//////////////////////////////////////////////////////////////////////////////
 //
 //	Function:  of_RefreshColors
 //
@@ -748,13 +749,13 @@ n_cst_string	lnv_string
 // Get the datawindow objects.
 ls_allobjects = dw_statusbar.Describe('DataWindow.Objects')
 
-// Set window background to match buttonface.
-this.backcolor = il_buttonface
+// Set window background
+this.backcolor = il_backgroundcolor
 
-// Set each datawindow object background to match buttonface.
+// Set each datawindow object background to match
 DO UNTIL Len(ls_allobjects) <= 0
 	ls_object = lnv_string.of_gettoken(ls_allobjects,'~t')
-	ls_modifyexp =	ls_object+".Background.Color='"+string(il_buttonface)+"' "
+	ls_modifyexp =	ls_object+".Background.Color='"+string(il_backgroundcolor)+"' "
 	ls_rc = dw_statusbar.Modify (ls_modifyexp)	
 LOOP
 
@@ -989,12 +990,14 @@ IF li_border > 0 THEN
 	ii_borderwidth = PixelsToUnits(li_border, xpixelstounits!)
 END IF
 
-// Provide default value for the ButtonFace color.
-If IsNull(ls_buttonface) or Len(ls_buttonface)=0 Then
-	il_buttonface = 78682240
-Else
-	il_buttonface = of_Color(ls_buttonface)
-End If
+IF GetTheme() = '' THEN  //Ignore the system settings if a theme has been applied
+	// Provide default value for the ButtonFace color.
+	If IsNull(ls_buttonface) or Len(ls_buttonface)=0 Then
+		il_backgroundcolor = 78682240
+	Else
+		il_backgroundcolor = of_Color(ls_buttonface)
+	End If
+END IF 	
 
 f_setplatform(lnv_platform, false)
 
@@ -1167,6 +1170,40 @@ Else
 End If
 
 Return li_rc
+end function
+
+public function integer of_setbackgroundcolor (long al_backgroundcolor);//////////////////////////////////////////////////////////////////////////////
+//
+/*
+ * Open Source PowerBuilder Foundation Class Libraries
+ *
+ * Copyright (c) 2004-2017, All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted in accordance with the MIT License
+
+ *
+ * https://opensource.org/licenses/MIT
+ *
+ * ====================================================================
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals and was originally based on software copyright (c) 
+ * 1996-2004 Sybase, Inc. http://www.sybase.com.  For more
+ * information on the Open Source PowerBuilder Foundation Class
+ * Libraries see https://github.com/OpenSourcePFCLibraries
+*/
+//
+//////////////////////////////////////////////////////////////////////////////
+
+If IsNull(al_backgroundcolor) or al_backgroundcolor < 0 Then
+	Return -1
+End If
+
+// Store the value for later use.
+il_backgroundcolor = al_backgroundcolor
+
+Return 1
 end function
 
 event open;//////////////////////////////////////////////////////////////////////////////
@@ -1387,12 +1424,12 @@ event move;// Override Ancestor.
 end event
 
 type dw_statusbar from u_dw within pfc_w_statusbar
-integer width = 1394
+integer width = 681
 integer height = 80
 boolean vscrollbar = false
 boolean border = false
 boolean livescroll = false
-borderstyle borderstyle = stylebox!
+borderstyle borderstyle = StyleBox!
 end type
 
 event rbuttonup;// Override Ancestor.
