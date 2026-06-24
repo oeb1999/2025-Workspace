@@ -26,7 +26,7 @@ long richtexteditx64type = 5
 long richtexteditversion = 3
 string richtexteditkey = ""
 string appicon = ""
-string appruntimeversion = "25.0.0.3683"
+string appruntimeversion = "25.1.0.6430"
 boolean manualsession = false
 boolean unsupportedapierror = false
 boolean ultrafast = false
@@ -72,7 +72,7 @@ event close;////////////////////////////////////////////////////////////////////
 //	Event:			close
 //	Arguments:		None
 //	Returns:			None
-//	Description:		Triggers the pfc_close event on gnv_app, then destroys the Application Manager.
+//	Description:		Triggers the pfc_close event on gnv_app, then destroys the Application Manager....
 //////////////////////////////////////////////////////////////////////////////
 gnv_app.TriggerEvent ( "pfc_close" )
 If IsValid ( gnv_app ) Then Destroy gnv_app
